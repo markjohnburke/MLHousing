@@ -1,0 +1,90 @@
+#Calculating Root mean squared least error, mean absolute error and mean standard error
+def rmsle(y, y_pred):
+    return np.sqrt(mean_squared_error(y, y_pred))
+
+def mae(y, y_pred):
+    return mean_absolute_error(y, y_pred)
+
+def mse(y, y_pred):
+    return mean_squared_error(y, y_pred)
+
+
+#Printing Root mean squared least error, mean absolute error and mean standard error
+print(rmsle(y_train, stacked_train_pred))
+print(mae(y_train, stacked_train_pred))
+print(mse(y_train, stacked_train_pred))
+
+
+print(mae(y_train,stacked_train_pred*0.70 +
+               xgb_train_pred*0.15 + lgb_train_pred*0.15)
+print(mse(y_train,stacked_train_pred*0.70 +
+               xgb_train_pred*0.15 + lgb_train_pred*0.15))
+
+
+#Defining validation function
+def rmsle_cv(model):
+    kf = KFold(n_folds, shuffle=True, random_state=42).get_n_splits(train.values)
+    rmse= np.sqrt(-cross_val_score(model, train.values, y_train, scoring="neg_mean_squared_error", cv = kf))
+    return(rmse)
+
+def mse_cv(model):
+    kf = KFold(n_folds, shuffle=True, random_state=42).get_n_splits(train.values)
+    mse= np.sqrt(-cross_val_score(model, train.values, y_train, scoring="mean_squared_error", cv = kf))
+    
+    return(mse)
+
+def mse_cv(model):
+    kf = KFold(n_folds, shuffle=True, random_state=42).get_n_splits(train.values)
+    mse= np.sqrt(-cross_val_score(model, train.values, y_train, scoring="mean_absolute_error", cv = kf))
+    
+    return(mae)
+
+
+
+score2 = mae_cv(lasso)
+score3 = mse_cv(lasso)
+
+print("\nLasso score: {:.4f} ({:.4f})\n".format(score2.mean(), score2.std()))
+print("\nLasso score: {:.4f} ({:.4f})\n".format(score3.mean(), score3.std()))
+
+
+
+def rmsle(y, y_pred):
+    return np.sqrt(mean_squared_error(y, y_pred))
+def mae(y, y_pred):
+    return mean_absolute_error(y, y_pred)
+def mse(y, y_pred):
+    return mean_squared_error(y, y_pred)
+
+stacked_averaged_models.fit(train.values, y_train)
+stacked_train_pred = stacked_averaged_models.predict(train.values)
+stacked_pred = np.expm1(stacked_averaged_models.predict(test.values))
+print(rmsle(y_train, stacked_train_pred))
+print(mae(y_train, stacked_train_pred))
+print(mse(y_train, stacked_train_pred))
+
+
+
+EXTRA:
+def rmsle(y, y_pred):
+    return np.sqrt(mean_squared_error(y, y_pred))
+def mae(y, y_pred):
+    return mean_absolute_error(y, y_pred)
+def mse(y, y_pred):
+    return mean_squared_error(y, y_pred)
+
+def error_metrics(model):
+    model.fit(train.values, y_train)
+    model_train_pred = model.predict(train.values)
+    model_pred = np.expm1(model.predict(test.values))
+    mse_score = mse(y_train, model_train_pred)
+    mae_score = mae(y_train, lasso_train_pred)
+    
+    return (mse, mae)
+
+
+
+WORKING CODE:
+score2 = error_metrics([ReplaceWithAlgo])
+print("NEW LINE \n")
+print(score2)
